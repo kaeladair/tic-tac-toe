@@ -43,8 +43,8 @@ const Game = (() => {
 
     const start = () => {
         players = [
-            playerFactory(document.querySelector('#player1').value, 'X'),
-            playerFactory(document.querySelector('#player2').value, 'O')
+            playerFactory("Player1", 'X'),
+            playerFactory("Player2", 'O')
         ];
         currentPlayerIndex = 0;
         gameOver = false;
@@ -122,10 +122,4 @@ restartButton.addEventListener('click', () => {
     Game.restart();
 });
 
-
-const startButton = document.querySelector('#startButton');
-startButton.addEventListener('click', () => {
-    Game.start();
-});
-
-Gameboard.render();
+Game.start();

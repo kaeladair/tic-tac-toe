@@ -14,8 +14,7 @@
     grid-template-columns: 200px 200px 200px;
     grid-template-rows: 200px 200px 200px;
     justify-content: center;
-    border: 2px solid black;
-    border-radius: 5px;
+    border: 1px solid black;
 }
 
 .square {
@@ -26,7 +25,7 @@
     color: #12232E;
     border: none;
     border-radius: 0px;
-    border: 2px solid black;
+    border: 1px solid black;
     outline: none;
     display: flex;
     justify-content: center;
