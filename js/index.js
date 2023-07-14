@@ -36,6 +36,21 @@ playerFactory = (name, mark) => {
     }
 };
 
+function disableHover() {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.classList.add('no-hover');
+    });
+}
+
+function enableHover() {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.classList.remove('no-hover');
+    });
+}
+
+
 // Game Flow
 const Game = (() => {
     let players = [];
@@ -57,6 +72,8 @@ const Game = (() => {
     }
 
     const handleClick = (event) => {
+        if (gameOver) return;
+
         let index = parseInt(event.target.id.split('-')[1]);
         if (Gameboard.getGameboard()[index] != "")
             return;
@@ -68,11 +85,13 @@ const Game = (() => {
         if (winningCombination) {
             gameOver = true;
             highlightWinningSquares(winningCombination);
+            disableHover();
             // Message
         }
 
         if (CheckTie(Gameboard.getGameboard())) {
             gameOver = true;
+            disableHover();
             // Message
         }
 
@@ -83,11 +102,13 @@ const Game = (() => {
     }
 
     const restart = () => {
+        gameOver = false;
         for (let i = 0; i < 9; i++) {
             const square = document.querySelector(`#square-${i}`);
             square.classList.remove('winning-square');
             Gameboard.update(i, "");
         }
+        enableHover();
         Gameboard.render();
     }
 

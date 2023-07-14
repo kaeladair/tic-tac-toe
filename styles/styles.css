@@ -111,3 +111,17 @@
     background-color: aqua; /* Or any color you want */
     /* Add any other styling you want */
 }
+
+.square.no-hover:hover {
+    /* Here, reset the properties that are changed by .square:hover */
+    /* For example, if .square:hover changes background-color, reset it here: */
+    background-color: #d6d6d6;
+    color: black;
+}
+
+.square.no-hover.winning-square:hover {
+    /* Here, reset the properties that are changed by .square:hover */
+    /* For example, if .square:hover changes background-color, reset it here: */
+    background-color: aqua;
+    color: black;
+}
