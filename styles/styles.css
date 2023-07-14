@@ -106,3 +106,8 @@
 #restartButton:active {
     transform: scale(.95);
 }
+
+.winning-square {
+    background-color: aqua; /* Or any color you want */
+    /* Add any other styling you want */
+}

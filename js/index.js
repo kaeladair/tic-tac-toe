@@ -1,4 +1,3 @@
-
 // Gameboard Module
 const Gameboard = (() => {
     let gameboard = ["", "", "", "", "", "", "", "", ""];
@@ -62,17 +61,21 @@ const Game = (() => {
         if (Gameboard.getGameboard()[index] != "")
             return;
 
-        if (checkWinner(Gameboard.getGameboard(), players[currentPlayerIndex].mark)) {
-            gameOver = true;
-            // Message
-        }
-
-        if (CheckTie) {
-            gameOver = true;
-            // Message
-        }
-
         Gameboard.update(index, players[currentPlayerIndex].mark);
+
+        const winningCombination = checkWinner(Gameboard.getGameboard());
+
+        if (winningCombination) {
+            gameOver = true;
+            highlightWinningSquares(winningCombination);
+            // Message
+        }
+
+        if (CheckTie(Gameboard.getGameboard())) {
+            gameOver = true;
+            // Message
+        }
+
         currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
 
         const player = document.querySelector('#playerTurn');
@@ -81,6 +84,8 @@ const Game = (() => {
 
     const restart = () => {
         for (let i = 0; i < 9; i++) {
+            const square = document.querySelector(`#square-${i}`);
+            square.classList.remove('winning-square');
             Gameboard.update(i, "");
         }
         Gameboard.render();
@@ -92,7 +97,6 @@ const Game = (() => {
         restart
     }
 })();
-
 
 function checkWinner(board) {
     const winningCombos = [
@@ -109,22 +113,26 @@ function checkWinner(board) {
     for (let i = 0; i < winningCombos.length; i++) {
         const [a, b, c] = winningCombos[i];
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return true;
+            return winningCombos[i];
         }
-        
     }
-    return false;
+    return null;
 }
 
 function CheckTie(board) {
     return board.every(cell => cell !== "");
 }
 
+function highlightWinningSquares(winningCombination) {
+    winningCombination.forEach(index => {
+        const winningSquare = document.querySelector(`#square-${index}`);
+        winningSquare.classList.add('winning-square');
+    });
+}
 
 const restartButton = document.querySelector('#restartButton');
 restartButton.addEventListener('click', () => {
     Game.restart();
 });
-
 
 Game.start();
