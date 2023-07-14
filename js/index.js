@@ -1,6 +1,8 @@
+
+// Gameboard Module
 const Gameboard = (() => {
     let gameboard = ["", "", "", "", "", "", "", "", ""];
-
+    // Render gameboard to the DOM
     const render = () => {
         let boardHTML = "";
         gameboard.forEach((square, index) => {
@@ -12,14 +14,14 @@ const Gameboard = (() => {
             square.addEventListener('click', Game.handleClick);
         })
     }
-
+    // Update the gameboard array
     const update = (index, value) => {
         gameboard[index] = value;
         render();
     }
-
+    // Get the gameboard array
     const getGameboard = () => gameboard;
-
+    // Return to public access
     return {
         render,
         update,
@@ -27,7 +29,7 @@ const Gameboard = (() => {
      }
 })();
 
-
+// Factory function to create players
 playerFactory = (name, mark) => {
     return {
         name, 
@@ -35,7 +37,7 @@ playerFactory = (name, mark) => {
     }
 };
 
-
+// Game Flow
 const Game = (() => {
     let players = [];
     let currentPlayerIndex;
@@ -43,8 +45,8 @@ const Game = (() => {
 
     const start = () => {
         players = [
-            playerFactory("Player1", 'X'),
-            playerFactory("Player2", 'O')
+            playerFactory("Player 1", 'X'),
+            playerFactory("Player 2", 'O')
         ];
         currentPlayerIndex = 0;
         gameOver = false;
@@ -72,6 +74,9 @@ const Game = (() => {
 
         Gameboard.update(index, players[currentPlayerIndex].mark);
         currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+
+        const player = document.querySelector('#playerTurn');
+        player.innerHTML = `${players[currentPlayerIndex].name}, Your Move`;
     }
 
     const restart = () => {
@@ -86,7 +91,6 @@ const Game = (() => {
         handleClick,
         restart
     }
-
 })();
 
 
@@ -121,5 +125,6 @@ const restartButton = document.querySelector('#restartButton');
 restartButton.addEventListener('click', () => {
     Game.restart();
 });
+
 
 Game.start();
