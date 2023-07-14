@@ -86,19 +86,20 @@ const Game = (() => {
             gameOver = true;
             highlightWinningSquares(winningCombination);
             disableHover();
-            // Message
-        }
 
-        if (CheckTie(Gameboard.getGameboard())) {
+            const player = document.querySelector('#playerTurn');
+            player.innerHTML = `${players[currentPlayerIndex].name} Wins!`;
+        } else if (CheckTie(Gameboard.getGameboard())) {
             gameOver = true;
             disableHover();
-            // Message
+
+            const player = document.querySelector('#playerTurn');
+            player.innerHTML = `It's a Tie!`;
+        } else {
+            currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+            const player = document.querySelector('#playerTurn');
+            player.innerHTML = `${players[currentPlayerIndex].name}, Your Move`;
         }
-
-        currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
-
-        const player = document.querySelector('#playerTurn');
-        player.innerHTML = `${players[currentPlayerIndex].name}, Your Move`;
     }
 
     const restart = () => {
@@ -108,6 +109,8 @@ const Game = (() => {
             square.classList.remove('winning-square');
             Gameboard.update(i, "");
         }
+        const player = document.querySelector('#playerTurn');
+        player.innerHTML = `${players[currentPlayerIndex].name}, Your Move`;
         enableHover();
         Gameboard.render();
     }
